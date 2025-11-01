@@ -1,10 +1,10 @@
 roms := \
-	pokecrystal.gbc \
-	pokecrystal11.gbc \
-	pokecrystal_au.gbc \
-	pokecrystal_debug.gbc \
-	pokecrystal11_debug.gbc
-patches := pokecrystal11.patch
+	betadex.gbc \
+	betadex11.gbc \
+	betadex_au.gbc \
+	betadex_debug.gbc \
+	betadex11_debug.gbc
+patches := betadex11.patch
 
 rom_obj := \
 	audio.o \
@@ -26,12 +26,12 @@ rom_obj := \
 	lib/mobile/main.o \
 	lib/mobile/mail.o
 
-pokecrystal_obj         := $(rom_obj:.o=.o)
-pokecrystal11_obj       := $(rom_obj:.o=11.o)
-pokecrystal_au_obj      := $(rom_obj:.o=_au.o)
-pokecrystal_debug_obj   := $(rom_obj:.o=_debug.o)
-pokecrystal11_debug_obj := $(rom_obj:.o=11_debug.o)
-pokecrystal11_vc_obj    := $(rom_obj:.o=11_vc.o)
+betadex_obj         := $(rom_obj:.o=.o)
+betadex11_obj       := $(rom_obj:.o=11.o)
+betadex_au_obj      := $(rom_obj:.o=_au.o)
+betadex_debug_obj   := $(rom_obj:.o=_debug.o)
+betadex11_debug_obj := $(rom_obj:.o=11_debug.o)
+betadex11_vc_obj    := $(rom_obj:.o=11_vc.o)
 
 
 ### Build tools
@@ -58,12 +58,12 @@ RGBLINK ?= $(RGBDS)rgblink
 .SECONDARY:
 
 all: crystal
-crystal:         pokecrystal.gbc
-crystal11:       pokecrystal11.gbc
-crystal_au:      pokecrystal_au.gbc
-d:               pokecrystal_debug.gbc
-crystal11_debug: pokecrystal11_debug.gbc
-crystal11_vc:    pokecrystal11.patch
+crystal:         betadex.gbc
+crystal11:       betadex11.gbc
+crystal_au:      betadex_au.gbc
+d:               betadex_debug.gbc
+crystal11_debug: betadex11_debug.gbc
+crystal11_vc:    betadex11.patch
 
 clean: tidy
 	find gfx \
@@ -89,12 +89,12 @@ tidy:
 	      $(patches:.patch=_vc.sym) \
 	      $(patches:.patch=_vc.map) \
 	      $(patches:%.patch=vc/%.constants.sym) \
-	      $(pokecrystal_obj) \
-	      $(pokecrystal11_obj) \
-	      $(pokecrystal11_vc_obj) \
-	      $(pokecrystal_au_obj) \
-	      $(pokecrystal_debug_obj) \
-	      $(pokecrystal11_debug_obj) \
+	      $(betadex_obj) \
+	      $(betadex11_obj) \
+	      $(betadex11_vc_obj) \
+	      $(betadex_au_obj) \
+	      $(betadex_debug_obj) \
+	      $(betadex11_debug_obj) \
 	      rgbdscheck.o
 	$(MAKE) clean -C tools/
 
@@ -105,10 +105,10 @@ tools:
 	$(MAKE) -C tools/
 
 all:
-	tools/free_space.awk BANK=all pokecrystal.map
+	tools/free_space.awk BANK=all betadex.map
 
 d:
-	tools/free_space.awk BANK=all pokecrystal_debug.map
+	tools/free_space.awk BANK=all betadex_debug.map
 
 RGBASMFLAGS = -Q8 -P includes.asm -Weverything -Wnumeric-string=2 -Wtruncation=1
 # Create a sym/map for debug purposes if `make` run with `DEBUG=1`
@@ -116,12 +116,12 @@ ifeq ($(DEBUG),1)
 RGBASMFLAGS += -E
 endif
 
-$(pokecrystal_obj):         RGBASMFLAGS +=
-$(pokecrystal11_obj):       RGBASMFLAGS += -D _CRYSTAL11
-$(pokecrystal_au_obj):      RGBASMFLAGS += -D _CRYSTAL11 -D _CRYSTAL_AU
-$(pokecrystal_debug_obj):   RGBASMFLAGS += -D _DEBUG
-$(pokecrystal11_debug_obj): RGBASMFLAGS += -D _CRYSTAL11 -D _DEBUG
-$(pokecrystal11_vc_obj):    RGBASMFLAGS += -D _CRYSTAL11 -D _CRYSTAL11_VC
+$(betadex_obj):         RGBASMFLAGS +=
+$(betadex11_obj):       RGBASMFLAGS += -D _CRYSTAL11
+$(betadex_au_obj):      RGBASMFLAGS += -D _CRYSTAL11 -D _CRYSTAL_AU
+$(betadex_debug_obj):   RGBASMFLAGS += -D _DEBUG
+$(betadex11_debug_obj): RGBASMFLAGS += -D _CRYSTAL11 -D _DEBUG
+$(betadex11_vc_obj):    RGBASMFLAGS += -D _CRYSTAL11 -D _CRYSTAL11_VC
 
 %.patch: vc/%.constants.sym %_vc.gbc %.gbc vc/%.patch.template
 	tools/make_patch $*_vc.sym $^ $@
@@ -145,12 +145,12 @@ $1: $2 $$(shell tools/scan_includes $2) $(preinclude_deps) | rgbdscheck.o
 endef
 
 # Dependencies for shared objects objects
-$(foreach obj, $(pokecrystal_obj), $(eval $(call DEP,$(obj),$(obj:.o=.asm))))
-$(foreach obj, $(pokecrystal11_obj), $(eval $(call DEP,$(obj),$(obj:11.o=.asm))))
-$(foreach obj, $(pokecrystal_au_obj), $(eval $(call DEP,$(obj),$(obj:_au.o=.asm))))
-$(foreach obj, $(pokecrystal_debug_obj), $(eval $(call DEP,$(obj),$(obj:_debug.o=.asm))))
-$(foreach obj, $(pokecrystal11_debug_obj), $(eval $(call DEP,$(obj),$(obj:11_debug.o=.asm))))
-$(foreach obj, $(pokecrystal11_vc_obj), $(eval $(call DEP,$(obj),$(obj:11_vc.o=.asm))))
+$(foreach obj, $(betadex_obj), $(eval $(call DEP,$(obj),$(obj:.o=.asm))))
+$(foreach obj, $(betadex11_obj), $(eval $(call DEP,$(obj),$(obj:11.o=.asm))))
+$(foreach obj, $(betadex_au_obj), $(eval $(call DEP,$(obj),$(obj:_au.o=.asm))))
+$(foreach obj, $(betadex_debug_obj), $(eval $(call DEP,$(obj),$(obj:_debug.o=.asm))))
+$(foreach obj, $(betadex11_debug_obj), $(eval $(call DEP,$(obj),$(obj:11_debug.o=.asm))))
+$(foreach obj, $(betadex11_vc_obj), $(eval $(call DEP,$(obj),$(obj:11_vc.o=.asm))))
 
 # Dependencies for VC files that need to run scan_includes
 %.constants.sym: %.constants.asm $(shell tools/scan_includes %.constants.asm) $(preinclude_deps) | rgbdscheck.o
@@ -159,12 +159,12 @@ $(foreach obj, $(pokecrystal11_vc_obj), $(eval $(call DEP,$(obj),$(obj:11_vc.o=.
 endif
 
 
-pokecrystal_opt         = -Cjv -t PM_CRYSTAL -i BYTE -n 0 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
-pokecrystal11_opt       = -Cjv -t PM_CRYSTAL -i BYTE -n 1 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
-pokecrystal_au_opt      = -Cjv -t PM_CRYSTAL -i BYTU -n 0 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
-pokecrystal_debug_opt   = -Cjv -t PM_CRYSTAL -i BYTE -n 0 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
-pokecrystal11_debug_opt = -Cjv -t PM_CRYSTAL -i BYTE -n 1 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
-pokecrystal11_vc_opt    = -Cjv -t PM_CRYSTAL -i BYTE -n 1 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
+betadex_opt         = -Cjv -t PM_CRYSTAL -i BYTE -n 0 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
+betadex11_opt       = -Cjv -t PM_CRYSTAL -i BYTE -n 1 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
+betadex_au_opt      = -Cjv -t PM_CRYSTAL -i BYTU -n 0 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
+betadex_debug_opt   = -Cjv -t PM_CRYSTAL -i BYTE -n 0 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
+betadex11_debug_opt = -Cjv -t PM_CRYSTAL -i BYTE -n 1 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
+betadex11_vc_opt    = -Cjv -t PM_CRYSTAL -i BYTE -n 1 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
 
 %.gbc: $$(%_obj) layout.link
 	$(RGBLINK) -n $*.sym -m $*.map -l layout.link -o $@ $(filter %.o,$^)
