@@ -202,8 +202,6 @@ HatchEggs:
 	jp nz, .next
 	ld [hl], $78
 
-	push de
-
 	farcall SetEggMonCaughtData
 	farcall StubbedTrainerRankings_EggsHatched
 	ld a, [wCurPartyMon]
@@ -214,17 +212,6 @@ HatchEggs:
 	ld [wCurPartySpecies], a
 	dec a
 	call SetSeenAndCaughtMon
-
-	ld a, [wCurPartySpecies]
-	cp TOGEPI
-	jr nz, .nottogepi
-	; set the event flag for hatching togepi
-	ld de, EVENT_TOGEPI_HATCHED
-	ld b, SET_FLAG
-	call EventFlagAction
-.nottogepi
-
-	pop de
 
 	ld a, [wCurPartySpecies]
 	dec de

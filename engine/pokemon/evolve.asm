@@ -302,6 +302,15 @@ EvolveAfterBattle_MasterLoop:
 	call SetSeenAndCaughtMon
 
 	ld a, [wTempSpecies]
+	cp TOGETIC
+	jr nz, .not_togetic
+	; set the event flag for evolving Togepi
+	ld de, EVENT_TOGEPI_EVOLVED
+	ld b, SET_FLAG
+	call EventFlagAction
+
+.not_togetic
+	ld a, [wTempSpecies]
 	cp UNOWN
 	jr nz, .skip_unown
 

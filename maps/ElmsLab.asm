@@ -102,40 +102,34 @@ ElmCheckMasterBall:
 ElmCheckEverstone:
 	checkevent EVENT_GOT_EVERSTONE_FROM_ELM
 	iftrue ElmScript_CallYou
-	checkevent EVENT_SHOWED_TOGEPI_TO_ELM
+	checkevent EVENT_SHOWED_TOGETIC_TO_ELM
 	iftrue ElmGiveEverstoneScript
-	checkevent EVENT_TOLD_ELM_ABOUT_TOGEPI_OVER_THE_PHONE
-	iffalse ElmCheckTogepiEgg
-	setval TOGEPI
-	special FindPartyMonThatSpeciesYourTrainerID
-	iftrue ShowElmTogepiScript
+	checkevent EVENT_TOLD_ELM_ABOUT_TOGETIC_OVER_THE_PHONE
+	iffalse ElmCheckTogepiEvolved
 	setval TOGETIC
 	special FindPartyMonThatSpeciesYourTrainerID
-	iftrue ShowElmTogepiScript
-	writetext ElmThoughtEggHatchedText
+	iftrue ShowElmTogeticScript
+	writetext ElmThoughtTogepiEvolvedText
 	waitbutton
 	closetext
 	end
 
-ElmEggHatchedScript:
-	setval TOGEPI
-	special FindPartyMonThatSpeciesYourTrainerID
-	iftrue ShowElmTogepiScript
+ElmTogepiEvolvedScript:
 	setval TOGETIC
 	special FindPartyMonThatSpeciesYourTrainerID
-	iftrue ShowElmTogepiScript
-	sjump ElmCheckGotEggAgain
+	iftrue ShowElmTogeticScript
+	sjump ElmCheckGotTogepiAgain
 
-ElmCheckTogepiEgg:
-	checkevent EVENT_GOT_TOGEPI_EGG_FROM_ELMS_AIDE
-	iffalse ElmCheckGotEggAgain
-	checkevent EVENT_TOGEPI_HATCHED
-	iftrue ElmEggHatchedScript
-ElmCheckGotEggAgain:
-	checkevent EVENT_GOT_TOGEPI_EGG_FROM_ELMS_AIDE ; why are we checking it again?
-	iftrue ElmWaitingEggHatchScript
+ElmCheckTogepiEvolved:
+	checkevent EVENT_GOT_TOGEPI_FROM_ELMS_AIDE
+	iffalse ElmCheckGotTogepiAgain
+	checkevent EVENT_TOGEPI_EVOLVED
+	iftrue ElmTogepiEvolvedScript
+ElmCheckGotTogepiAgain:
+	checkevent EVENT_GOT_TOGEPI_FROM_ELMS_AIDE ; why are we checking it again?
+	iftrue ElmWaitingTogepiEvolveScript
 	checkflag ENGINE_ZEPHYRBADGE
-	iftrue ElmAideHasEggScript
+	iftrue ElmAideHasTogepiScript
 	checkevent EVENT_GAVE_MYSTERY_EGG_TO_ELM
 	iftrue ElmStudyingEggScript
 	checkevent EVENT_GOT_MYSTERY_EGG_FROM_MR_POKEMON
@@ -354,28 +348,28 @@ ElmStudyingEggScript:
 	closetext
 	end
 
-ElmAideHasEggScript:
-	writetext ElmAideHasEggText
+ElmAideHasTogepiScript:
+	writetext ElmAideHasTogepiText
 	waitbutton
 	closetext
 	end
 
-ElmWaitingEggHatchScript:
-	writetext ElmWaitingEggHatchText
+ElmWaitingTogepiEvolveScript:
+	writetext ElmWaitingTogepiEvolveText
 	waitbutton
 	closetext
 	end
 
-ShowElmTogepiScript:
-	writetext ShowElmTogepiText1
+ShowElmTogeticScript:
+	writetext ShowElmTogeticText1
 	waitbutton
 	closetext
 	showemote EMOTE_SHOCK, ELMSLAB_ELM, 15
-	setevent EVENT_SHOWED_TOGEPI_TO_ELM
+	setevent EVENT_SHOWED_TOGETIC_TO_ELM
 	opentext
-	writetext ShowElmTogepiText2
+	writetext ShowElmTogeticText2
 	promptbutton
-	writetext ShowElmTogepiText3
+	writetext ShowElmTogeticText3
 	promptbutton
 ElmGiveEverstoneScript:
 	writetext ElmGiveEverstoneText1
@@ -515,7 +509,7 @@ AideScript_ReceiveTheBalls:
 ElmsAideScript:
 	faceplayer
 	opentext
-	checkevent EVENT_GOT_TOGEPI_EGG_FROM_ELMS_AIDE
+	checkevent EVENT_GOT_TOGEPI_FROM_ELMS_AIDE
 	iftrue AideScript_AfterTheft
 	checkevent EVENT_GAVE_MYSTERY_EGG_TO_ELM
 	iftrue AideScript_ExplainBalls
@@ -1043,13 +1037,13 @@ ElmStudyingEggText:
 	line "about that EGG!"
 	done
 
-ElmAideHasEggText:
+ElmAideHasTogepiText:
 	text "ELM: <PLAY_G>?"
 	line "Didn't you meet my"
 	cont "assistant?"
 
 	para "He should have met"
-	line "you with the EGG"
+	line "you with TOGEPI"
 
 	para "at VIOLET CITY's"
 	line "#MON CENTER."
@@ -1059,36 +1053,39 @@ ElmAideHasEggText:
 	cont "catch him there."
 	done
 
-ElmWaitingEggHatchText:
+ElmWaitingTogepiEvolveText:
 	text "ELM: Hey, has that"
-	line "EGG changed any?"
+	line "TOGEPI changed?"
 	done
 
-ElmThoughtEggHatchedText:
+ElmThoughtTogepiEvolvedText:
 	text "<PLAY_G>? I thought"
-	line "the EGG hatched."
+	line "TOGEPI evolved."
 
 	para "Where is the"
 	line "#MON?"
 	done
 
-ShowElmTogepiText1:
+ShowElmTogeticText1:
 	text "ELM: <PLAY_G>, you"
 	line "look great!"
 	done
 
-ShowElmTogepiText2:
+ShowElmTogeticText2:
 	text "What?"
 	line "That #MON!?!"
 	done
 
-ShowElmTogepiText3:
-	text "The EGG hatched!"
-	line "So, #MON are"
-	cont "born from EGGS…"
+ShowElmTogeticText3:
+	text "TOGEPI evolved!"
+	line "So, some #MON"
+	cont "evolve based on"
+	cont "strong feelings"
+	cont "for their trainer…"
 
-	para "No, perhaps not"
-	line "all #MON are."
+	para "And if there is"
+	line "one, there are"
+	cont "likely others."
 
 	para "Wow, there's still"
 	line "a lot of research"
