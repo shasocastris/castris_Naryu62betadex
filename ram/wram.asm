@@ -2785,7 +2785,6 @@ wTempTMHM::
 wTempPP::
 wNextBoxOrPartyIndex::
 wChosenCableClubRoom::
-wBreedingCompatibility::
 wApplyStatLevelMultipliersToEnemy::
 wUsePPUp::
 wd265:: ; mobile
@@ -3381,25 +3380,18 @@ wDayCareMan::
 ; bit 0: monster 1 in day-care
 	db
 
-wBreedMon1Nickname:: ds MON_NAME_LENGTH
-wBreedMon1OT:: ds NAME_LENGTH
-wBreedMon1:: box_struct wBreedMon1
+wDayCareMon1Nickname:: ds MON_NAME_LENGTH
+wDayCareMon1OT:: ds NAME_LENGTH
+wDayCareMon1:: box_struct wDayCareMon1
 
 wDayCareLady::
 ; bit 7: active
 ; bit 0: monster 2 in day-care
 	db
 
-wStepsToEgg::
-	db
-wBreedMotherOrNonDitto::
-;  z: yes
-; nz: no
-	db
-
-wBreedMon2Nickname:: ds MON_NAME_LENGTH
-wBreedMon2OT:: ds NAME_LENGTH
-wBreedMon2:: box_struct wBreedMon2
+wDayCareMon2Nickname:: ds MON_NAME_LENGTH
+wDayCareMon2OT:: ds NAME_LENGTH
+wDayCareMon2:: box_struct wDayCareMon2
 
 wEggMonNickname:: ds MON_NAME_LENGTH
 wEggMonOT:: ds NAME_LENGTH

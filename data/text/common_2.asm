@@ -755,34 +755,9 @@ _MoveNameText::
 	text "!"
 	done
 
-Text_BreedHuh::
-	text "Huh?"
-
-	para "@"
-	text_end
-
-_BreedClearboxText::
-	text_start
-	done
-
-_BreedEggHatchText::
-	text_ram wStringBuffer1
-	text " came"
-	line "out of its EGG!@"
-	sound_caught_mon
-	text_promptbutton
-	text_end
-
-_BreedAskNicknameText::
-	text "Give a nickname to"
-	line "@"
-	text_ram wStringBuffer1
-	text "?"
-	done
-
 _LeftWithDayCareLadyText::
 	text "It's @"
-	text_ram wBreedMon2Nickname
+	text_ram wDayCareMon2Nickname
 	text_start
 	line "that was left with"
 	cont "the DAY-CARE LADY."
@@ -790,7 +765,7 @@ _LeftWithDayCareLadyText::
 
 _LeftWithDayCareManText::
 	text "It's @"
-	text_ram wBreedMon1Nickname
+	text_ram wDayCareMon1Nickname
 	text_start
 	line "that was left with"
 	cont "the DAY-CARE MAN."
@@ -799,16 +774,6 @@ _LeftWithDayCareManText::
 _BrimmingWithEnergyText::
 	text "It's brimming with"
 	line "energy."
-	prompt
-
-_BreedNoInterestText::
-	text "Both #MON are"
-	line "incompatible."
-	prompt
-
-_BreedShowsInterestText::
-	text "Both #MON are"
-	line "compatible."
 	prompt
 
 _EmptyMailboxText::

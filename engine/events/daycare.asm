@@ -38,10 +38,10 @@ DayCareMan:
 	ret
 
 .AskWithdrawMon:
-	farcall GetBreedMon1LevelGrowth
-	ld hl, wBreedMon1Nickname
-	call GetPriceToRetrieveBreedmon
-	call DayCare_AskWithdrawBreedMon
+	farcall GetDayCareMon1LevelGrowth
+	ld hl, wDayCareMon1Nickname
+	call GetPriceToRetrieveDaycaremon
+	call DayCare_AskWithdrawDayCareMon
 	jr c, .print_text
 	farcall RetrieveMonFromDayCareMan
 	call DayCare_GetBackMonForMoney
@@ -75,10 +75,10 @@ DayCareLady:
 	ret
 
 .AskWithdrawMon:
-	farcall GetBreedMon2LevelGrowth
-	ld hl, wBreedMon2Nickname
-	call GetPriceToRetrieveBreedmon
-	call DayCare_AskWithdrawBreedMon
+	farcall GetDayCareMon2LevelGrowth
+	ld hl, wDayCareMon2Nickname
+	call GetPriceToRetrieveDaycaremon
+	call DayCare_AskWithdrawDayCareMon
 	jr c, .print_text
 	farcall RetrieveMonFromDayCareLady
 	call DayCare_GetBackMonForMoney
@@ -173,7 +173,7 @@ DayCare_DepositPokemonText:
 	call PrintDayCareText
 	ret
 
-DayCare_AskWithdrawBreedMon:
+DayCare_AskWithdrawDayCareMon:
 	ld a, [wStringBuffer2 + 1]
 	and a
 	jr nz, .grew_at_least_one_level
@@ -231,7 +231,7 @@ DayCare_GetBackMonForMoney:
 	call PrintDayCareText
 	ret
 
-GetPriceToRetrieveBreedmon:
+GetPriceToRetrieveDaycaremon:
 	ld a, b
 	ld [wStringBuffer2], a
 	ld a, d

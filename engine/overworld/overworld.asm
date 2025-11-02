@@ -188,9 +188,9 @@ GetMonSprite:
 	cp SPRITE_POKEMON
 	jr c, .Normal
 	cp SPRITE_DAY_CARE_MON_1
-	jr z, .BreedMon1
+	jr z, .DayCareMon1
 	cp SPRITE_DAY_CARE_MON_2
-	jr z, .BreedMon2
+	jr z, .DayCareMon2
 	cp SPRITE_VARS
 	jr nc, .Variable
 	jr .Icon
@@ -208,17 +208,17 @@ GetMonSprite:
 	ld a, [hl]
 	jr .Mon
 
-.BreedMon1
-	ld a, [wBreedMon1Species]
+.DayCareMon1
+	ld a, [wDayCareMon1Species]
 	jr .Mon
 
-.BreedMon2
-	ld a, [wBreedMon2Species]
+.DayCareMon2
+	ld a, [wDayCareMon2Species]
 
 .Mon:
 	ld e, a
 	and a
-	jr z, .NoBreedmon
+	jr z, .NoDaycaremon
 
 	farcall LoadOverworldMonIcon
 
@@ -237,7 +237,7 @@ GetMonSprite:
 	and a
 	jp nz, GetMonSprite
 
-.NoBreedmon:
+.NoDaycaremon:
 	ld a, WALKING_SPRITE
 	ld l, WALKING_SPRITE
 	ld h, 0

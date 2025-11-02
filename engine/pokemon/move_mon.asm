@@ -478,36 +478,36 @@ AddTempmonToParty:
 	ret
 
 RetrieveMonFromDayCareMan:
-	ld a, [wBreedMon1Species]
+	ld a, [wDayCareMon1Species]
 	ld [wCurPartySpecies], a
 	ld de, SFX_TRANSACTION
 	call PlaySFX
 	call WaitSFX
-	call GetBreedMon1LevelGrowth
+	call GetDayCareMon1LevelGrowth
 	ld a, b
 	ld [wPrevPartyLevel], a
 	ld a, e
 	ld [wCurPartyLevel], a
 	xor a
 	ld [wPokemonWithdrawDepositParameter], a
-	jp RetrieveBreedmon
+	jp RetrieveDaycaremon
 
 RetrieveMonFromDayCareLady:
-	ld a, [wBreedMon2Species]
+	ld a, [wDayCareMon2Species]
 	ld [wCurPartySpecies], a
 	ld de, SFX_TRANSACTION
 	call PlaySFX
 	call WaitSFX
-	call GetBreedMon2LevelGrowth
+	call GetDayCareMon2LevelGrowth
 	ld a, b
 	ld [wPrevPartyLevel], a
 	ld a, e
 	ld [wCurPartyLevel], a
 	ld a, PC_DEPOSIT
 	ld [wPokemonWithdrawDepositParameter], a
-	jp RetrieveBreedmon ; pointless
+	jp RetrieveDaycaremon ; pointless
 
-RetrieveBreedmon:
+RetrieveDaycaremon:
 	ld hl, wPartyCount
 	ld a, [hl]
 	cp PARTY_LENGTH
@@ -523,11 +523,11 @@ RetrieveBreedmon:
 	add hl, bc
 	ld a, [wPokemonWithdrawDepositParameter]
 	and a
-	ld a, [wBreedMon1Species]
-	ld de, wBreedMon1Nickname
+	ld a, [wDayCareMon1Species]
+	ld de, wDayCareMon1Nickname
 	jr z, .okay
-	ld a, [wBreedMon2Species]
-	ld de, wBreedMon2Nickname
+	ld a, [wDayCareMon2Species]
+	ld de, wDayCareMon2Nickname
 
 .okay
 	ld [hli], a
@@ -628,20 +628,20 @@ GetLastPartyMon:
 	ret
 
 DepositMonWithDayCareMan:
-	ld de, wBreedMon1Nickname
-	call DepositBreedmon
+	ld de, wDayCareMon1Nickname
+	call DepositDaycaremon
 	xor a ; REMOVE_PARTY
 	ld [wPokemonWithdrawDepositParameter], a
 	jp RemoveMonFromParty
 
 DepositMonWithDayCareLady:
-	ld de, wBreedMon2Nickname
-	call DepositBreedmon
+	ld de, wDayCareMon2Nickname
+	call DepositDaycaremon
 	xor a ; REMOVE_PARTY
 	ld [wPokemonWithdrawDepositParameter], a
 	jp RemoveMonFromParty
 
-DepositBreedmon:
+DepositDaycaremon:
 	ld a, [wCurPartyMon]
 	ld hl, wPartyMonNicknames
 	call SkipNames
