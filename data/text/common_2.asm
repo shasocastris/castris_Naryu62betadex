@@ -780,6 +780,7 @@ _BreedAskNicknameText::
 	text "?"
 	done
 
+_LeftWithDayCareLadyText::
 	text "It's @"
 	text_ram wBreedMon2Nickname
 	text_start
@@ -788,16 +789,17 @@ _BreedAskNicknameText::
 	done
 
 _LeftWithDayCareManText::
-	text "It's my @"
+	text "It's @"
 	text_ram wBreedMon1Nickname
-	text "."
+	text_start
+	line "that was left with"
+	cont "the DAY-CARE MAN."
 	done
 
-_LeftWithDayCareLadyText::
-	text "It's my @"
-	text_ram wBreedMon2Nickname
-	text "."
-	done
+_BrimmingWithEnergyText::
+	text "It's brimming with"
+	line "energy."
+	prompt
 
 _BreedNoInterestText::
 	text "Both #MON are"
