@@ -18,12 +18,6 @@ AnimateMon_Evolve:
 	call AnimateFrontpic
 	ret
 
-AnimateMon_Hatch:
-	ld e, ANIM_MON_HATCH
-	ld d, $0
-	call AnimateFrontpic
-	ret
-
 AnimateMon_HOF:
 	ld e, ANIM_MON_HOF
 	ld d, $0
@@ -45,20 +39,14 @@ PokeAnims:
 	dw .Menu
 	dw .Trade
 	dw .Evolve
-	dw .Hatch
 	dw .HOF
-	dw .Egg1
-	dw .Egg2
 
 .Slow:   pokeanim StereoCry, Setup2, Play
 .Normal: pokeanim StereoCry, Setup, Play
 .Menu:   pokeanim CryNoWait, Setup, Play, SetWait, Wait, Idle, Play
 .Trade:  pokeanim Idle, Play2, Idle, Play, SetWait, Wait, Cry, Setup, Play
 .Evolve: pokeanim Idle, Play, SetWait, Wait, CryNoWait, Setup, Play
-.Hatch:  pokeanim Idle, Play, CryNoWait, Setup, Play, SetWait, Wait, Idle, Play
 .HOF:    pokeanim CryNoWait, Setup, Play, SetWait, Wait, Idle, Play
-.Egg1:   pokeanim Setup, Play
-.Egg2:   pokeanim Idle, Play
 
 AnimateFrontpic:
 	call AnimateMon_CheckIfPokemon
@@ -461,11 +449,6 @@ PokeAnim_StopWaitAnim:
 PokeAnim_IsUnown:
 	ld a, [wPokeAnimSpecies]
 	cp UNOWN
-	ret
-
-PokeAnim_IsEgg:
-	ld a, [wPokeAnimSpecies]
-	cp EGG
 	ret
 
 PokeAnim_GetPointer:
@@ -891,9 +874,6 @@ PokeAnim_GetAttrmapCoord:
 	ret
 
 GetMonAnimPointer:
-	call PokeAnim_IsEgg
-	jr z, .egg
-
 	ld c, BANK(UnownAnimationPointers) ; aka BANK(UnownAnimationIdlePointers)
 	ld hl, UnownAnimationPointers
 	ld de, UnownAnimationIdlePointers
@@ -926,23 +906,23 @@ GetMonAnimPointer:
 	ld [wPokeAnimPointerAddr + 1], a
 	ret
 
-.egg
-	ld hl, EggAnimation
-	ld c, BANK(EggAnimation)
-	ld a, [wPokeAnimIdleFlag]
-	and a
-	jr z, .idles_egg
-	ld hl, EggAnimationIdle
-	ld c, BANK(EggAnimationIdle)
-.idles_egg
+;.egg
+;	ld hl, EggAnimation
+;	ld c, BANK(EggAnimation)
+;	ld a, [wPokeAnimIdleFlag]
+;	and a
+;	jr z, .idles_egg
+;	ld hl, EggAnimationIdle
+;	ld c, BANK(EggAnimationIdle)
+;.idles_egg
 
-	ld a, c
-	ld [wPokeAnimPointerBank], a
-	ld a, l
-	ld [wPokeAnimPointerAddr], a
-	ld a, h
-	ld [wPokeAnimPointerAddr + 1], a
-	ret
+;	ld a, c
+;	ld [wPokeAnimPointerBank], a
+;	ld a, l
+;	ld [wPokeAnimPointerAddr], a
+;	ld a, h
+;	ld [wPokeAnimPointerAddr + 1], a
+;	ret
 
 PokeAnim_GetFrontpicDims:
 	ldh a, [rSVBK]
@@ -960,9 +940,6 @@ PokeAnim_GetFrontpicDims:
 	ret
 
 GetMonFramesPointer:
-	call PokeAnim_IsEgg
-	jr z, .egg
-
 	call PokeAnim_IsUnown
 	ld b, BANK(UnownFramesPointers)
 	ld c, BANK(UnownsFrames)
@@ -993,21 +970,18 @@ GetMonFramesPointer:
 	ld [wPokeAnimFramesAddr + 1], a
 	ret
 
-.egg
-	ld hl, EggFrames
-	ld c, BANK(EggFrames)
-	ld a, c
-	ld [wPokeAnimFramesBank], a
-	ld a, l
-	ld [wPokeAnimFramesAddr], a
-	ld a, h
-	ld [wPokeAnimFramesAddr + 1], a
-	ret
+;.egg
+;	ld hl, EggFrames
+;	ld c, BANK(EggFrames)
+;	ld a, c
+;	ld [wPokeAnimFramesBank], a
+;	ld a, l
+;	ld [wPokeAnimFramesAddr], a
+;	ld a, h
+;	ld [wPokeAnimFramesAddr + 1], a
+;	ret
 
 GetMonBitmaskPointer:
-	call PokeAnim_IsEgg
-	jr z, .egg
-
 	call PokeAnim_IsUnown
 	ld a, BANK(UnownBitmasksPointers)
 	ld hl, UnownBitmasksPointers
@@ -1031,16 +1005,16 @@ GetMonBitmaskPointer:
 	ld [wPokeAnimBitmaskAddr + 1], a
 	ret
 
-.egg
-	ld c, BANK(EggBitmasks)
-	ld hl, EggBitmasks
-	ld a, c
-	ld [wPokeAnimBitmaskBank], a
-	ld a, l
-	ld [wPokeAnimBitmaskAddr], a
-	ld a, h
-	ld [wPokeAnimBitmaskAddr + 1], a
-	ret
+;.egg
+;	ld c, BANK(EggBitmasks)
+;	ld hl, EggBitmasks
+;	ld a, c
+;	ld [wPokeAnimBitmaskBank], a
+;	ld a, l
+;	ld [wPokeAnimBitmaskAddr], a
+;	ld a, h
+;	ld [wPokeAnimBitmaskAddr + 1], a
+;	ret
 
 PokeAnim_GetSpeciesOrUnown:
 	call PokeAnim_IsUnown

@@ -527,10 +527,12 @@ INCLUDE "gfx/pokemon/celebi/shiny.pal"
 	RGB 30, 26, 11
 	RGB 23, 16, 00
 
-INCBIN "gfx/pokemon/egg/front.gbcpal", middle_colors
-INCLUDE "gfx/pokemon/egg/shiny.pal"
-
-	assert_table_length EGG + 1
+; 253
+	RGB 17, 22, 28
+	RGB 09, 12, 27
+; 253 shiny
+	RGB 17, 22, 28
+	RGB 09, 12, 27
 
 ; 254
 	RGB 30, 26, 11

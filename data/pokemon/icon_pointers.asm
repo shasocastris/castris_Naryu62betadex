@@ -255,5 +255,5 @@ IconPointers:
 	dw CelebiIcon
 	assert_table_length NUM_POKEMON + 1
 	dw NullIcon ; unused
-	dw EggIcon
+	dw NullIcon ; unused
 	assert_table_length EGG + 1
