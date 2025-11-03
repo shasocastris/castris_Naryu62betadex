@@ -101,7 +101,6 @@ SpecialsPointers::
 	add_special NameRater
 	add_special DisplayLinkRecord
 	add_special GetFirstPokemonHappiness
-	add_special CheckFirstMonIsEgg
 	add_special RandomUnseenWildMon
 	add_special RandomPhoneWildMon
 	add_special RandomPhoneMon

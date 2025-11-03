@@ -2,30 +2,9 @@ GetFirstPokemonHappiness:
 	ld hl, wPartyMon1Happiness
 	ld bc, PARTYMON_STRUCT_LENGTH
 	ld de, wPartySpecies
-.loop
 	ld a, [de]
-	cp EGG
-	jr nz, .done
-	inc de
-	add hl, bc
-	jr .loop
-
-.done
 	ld [wNamedObjectIndex], a
 	ld a, [hl]
-	ld [wScriptVar], a
-	call GetPokemonName
-	jp CopyPokemonName_Buffer1_Buffer3
-
-CheckFirstMonIsEgg:
-	ld a, [wPartySpecies]
-	ld [wNamedObjectIndex], a
-	cp EGG
-	ld a, TRUE
-	jr z, .egg
-	xor a
-
-.egg
 	ld [wScriptVar], a
 	call GetPokemonName
 	jp CopyPokemonName_Buffer1_Buffer3
@@ -40,8 +19,6 @@ ChangeHappiness:
 	ld hl, wPartySpecies - 1
 	add hl, de
 	ld a, [hl]
-	cp EGG
-	ret z
 
 	push bc
 	ld hl, wPartyMon1Happiness
@@ -105,39 +82,17 @@ ChangeHappiness:
 INCLUDE "data/events/happiness_changes.asm"
 
 StepHappiness::
-; Raise the party's happiness by 1 point every other step cycle.
-
-	ld hl, wHappinessStepCount
-	ld a, [hl]
-	inc a
-	and 1
-	ld [hl], a
-	ret nz
-
-	ld de, wPartyCount
-	ld a, [de]
+; Raise the party's happiness by HAPPINESS_STEP point every other step cycle.
+	ld a, [wPartyCount]
+.loop
 	and a
 	ret z
-
-	ld c, a
-	ld hl, wPartyMon1Happiness
-.loop
-	inc de
-	ld a, [de]
-	cp EGG
-	jr z, .next
-	inc [hl]
-	jr nz, .next
-	ld [hl], $ff
-
-.next
-	push de
-	ld de, PARTYMON_STRUCT_LENGTH
-	add hl, de
-	pop de
-	dec c
-	jr nz, .loop
-	ret
+	dec a
+	ld [wCurPartyMon], a
+	ld c, HAPPINESS_STEP
+	call ChangeHappiness
+	ld a, [wCurPartyMon]
+	jr .loop
 
 DayCareStep::
 ; Raise the experience of Day-Care Pokémon every step cycle.

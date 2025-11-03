@@ -132,8 +132,6 @@ Route35NationalParkGate_LeaveTheRestBehind:
 	ifequal 0, Route35NationalParkGate_NoRoomInBox
 
 Route35NationalParkGate_LessThanFullParty:
-	special CheckFirstMonIsEgg
-	ifequal TRUE, Route35NationalParkGate_FirstMonIsEgg
 	writetext Route35NationalParkGateOfficer1AskToUseFirstMonText
 	yesorno
 	iffalse Route35NationalParkGate_DeclinedToLeaveMonsBehind
@@ -168,12 +166,6 @@ Route35NationalParkGate_FirstMonIsFainted:
 
 Route35NationalParkGate_NoRoomInBox:
 	writetext Route35NationalParkGateOfficer1MakeRoomText
-	waitbutton
-	closetext
-	end
-
-Route35NationalParkGate_FirstMonIsEgg:
-	writetext Route35NationalParkGateOfficer1EggAsFirstMonText
 	waitbutton
 	closetext
 	end
@@ -353,20 +345,6 @@ Route35NationalParkGateOfficer1MakeRoomText:
 
 	para "your PC BOX, then"
 	line "come see me."
-	done
-
-Route35NationalParkGateOfficer1EggAsFirstMonText:
-	text "Uh-oh…"
-	line "You have an EGG as"
-
-	para "the first #MON"
-	line "in your party."
-
-	para "Please switch it"
-	line "with the #MON"
-
-	para "you want to use,"
-	line "then come see me."
 	done
 
 Route35NationalParkGateOfficer1WantToFinishText:

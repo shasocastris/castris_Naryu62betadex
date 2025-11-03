@@ -184,8 +184,6 @@ Route36OfficerScriptContest:
 	readvar VAR_BOXSPACE
 	ifequal 0, .BoxFull
 .ContinueLeavingMons:
-	special CheckFirstMonIsEgg
-	ifequal TRUE, .FirstMonIsEgg
 	writetext Route36NationalParkGateOfficer1AskToUseFirstMonText
 	yesorno
 	iffalse .RefusedToLeaveMons
@@ -220,12 +218,6 @@ Route36OfficerScriptContest:
 
 .BoxFull:
 	writetext Route36NationalParkGateOfficer1MakeRoomText
-	waitbutton
-	closetext
-	end
-
-.FirstMonIsEgg:
-	writetext Route36NationalParkGateOfficer1EggAsFirstMonText
 	waitbutton
 	closetext
 	end
@@ -600,20 +592,6 @@ Route36NationalParkGateOfficer1MakeRoomText:
 
 	para "your PC BOX, then"
 	line "come see me."
-	done
-
-Route36NationalParkGateOfficer1EggAsFirstMonText:
-	text "Uh-oh…"
-	line "You have an EGG as"
-
-	para "the first #MON"
-	line "in your party."
-
-	para "Please switch it"
-	line "with the #MON"
-
-	para "you want to use,"
-	line "then come see me."
 	done
 
 Route36NationalParkGateOfficer1WantToFinishText:
